@@ -196,7 +196,12 @@ export default function Home() {
               </div>
             </div>
 
-            <button className="w-full bg-blue-600 py-4 px-8 rounded text-white mt-8">
+            <button
+              className="w-full bg-blue-600 py-4 px-8 rounded text-white mt-8"
+              onClick={() => {
+                console.log("ChosenList is:", chosenList);
+              }}
+            >
               Submit
             </button>
           </div>
