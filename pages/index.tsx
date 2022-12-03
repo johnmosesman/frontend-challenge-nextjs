@@ -103,6 +103,19 @@ export default function Home() {
                             type="checkbox"
                             name={`${course}-select-all`}
                             className="mb-2"
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setChosenList({
+                                  ...chosenList,
+                                  [course]: data[course],
+                                });
+                              } else {
+                                setChosenList({
+                                  ...chosenList,
+                                  [course]: [],
+                                });
+                              }
+                            }}
                           />
                           Select All
                         </label>
@@ -166,6 +179,10 @@ export default function Home() {
                               type="checkbox"
                               name={`${course}-select-all`}
                               className="mb-2"
+                              checked={true}
+                              onChange={() => {
+                                setChosenList({ ...chosenList, [course]: [] });
+                              }}
                             />
                             Select All
                           </label>
