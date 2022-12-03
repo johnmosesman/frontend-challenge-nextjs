@@ -115,6 +115,9 @@ export default function Home() {
                                 name={`${course}-${item.name}`}
                                 className="mb-2"
                                 readOnly
+                                checked={chosenList[course].some(
+                                  (i) => i.name === item.name
+                                )}
                                 onChange={(e) => {
                                   if (e.target.checked) {
                                     const newList = {
@@ -174,6 +177,17 @@ export default function Home() {
                                   type="checkbox"
                                   name={`${course}-${item.name}`}
                                   className="mb-2"
+                                  checked={true}
+                                  onChange={() => {
+                                    const filteredItems = chosenList[
+                                      course
+                                    ].filter((i) => i.name !== item.name);
+
+                                    setChosenList({
+                                      ...chosenList,
+                                      [course]: filteredItems,
+                                    });
+                                  }}
                                 />
                                 {item.name}
                               </label>
