@@ -30,9 +30,11 @@ export default function Home() {
 
   const defaultCourse = "all";
   const [courseFilter, setCourseFilter] = useState<string>(defaultCourse);
+  const [searchFilter, setSearchFilter] = useState<string>();
 
   console.log("chosenList", chosenList);
   console.log("courseFilter", courseFilter);
+  console.log("searchFilter", searchFilter);
 
   return (
     <div>
@@ -92,6 +94,10 @@ export default function Home() {
                 type="text"
                 placeholder="Search Items"
                 className="border border-gray-300 rounded p-2"
+                value={searchFilter}
+                onChange={(e) => {
+                  setSearchFilter(e.target.value);
+                }}
               />
             </div>
 
@@ -105,6 +111,18 @@ export default function Home() {
                       courseFilter === defaultCourse || course === courseFilter
                   )
                   .map((course) => {
+                    const itemsFilteredBySearch = data[course].filter(
+                      (item) =>
+                        !searchFilter ||
+                        item.name
+                          .toLowerCase()
+                          .includes(searchFilter.toLowerCase().trim())
+                    );
+
+                    if (itemsFilteredBySearch.length === 0) {
+                      return null;
+                    }
+
                     return (
                       <div key={course} className="mb-4">
                         <p className="font-semibold mb-1 capitalize">
@@ -135,7 +153,7 @@ export default function Home() {
                             Select All
                           </label>
 
-                          {data[course].map((item) => {
+                          {itemsFilteredBySearch.map((item) => {
                             return (
                               <label key={item.name} className="capitalize">
                                 <input
