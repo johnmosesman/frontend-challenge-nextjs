@@ -28,7 +28,11 @@ export default function Home() {
   }, {} as Menu);
   const [chosenList, setChosenList] = useState<Menu>(emptyMenu);
 
+  const defaultCourse = "all";
+  const [courseFilter, setCourseFilter] = useState<string>(defaultCourse);
+
   console.log("chosenList", chosenList);
+  console.log("courseFilter", courseFilter);
 
   return (
     <div>
@@ -50,7 +54,7 @@ export default function Home() {
               demo here
             </a>
             ) for this mockup using your technique of choice and post your
-            solution to
+            solution to{" "}
             <a
               className="underline"
               href="https://twitter.com/johnmosesman/status/1598688398679724033?cxt=HHwWgsC-3Zuo168sAAAA"
@@ -64,10 +68,14 @@ export default function Home() {
               <p className="mb-1">Select Course</p>
               <div>
                 <select
-                  value="All courses"
                   className="border border-gray-300 rounded p-2 capitalize"
+                  onChange={(e) => {
+                    setCourseFilter(e.target.value);
+                  }}
                 >
-                  <option value="all">All courses</option>
+                  <option selected value={defaultCourse}>
+                    All courses
+                  </option>
 
                   {courses.map((course) => (
                     <option key={course} value={course}>
@@ -91,73 +99,80 @@ export default function Home() {
               <div>
                 <p className="mb-4">All Items</p>
 
-                {Object.keys(data).map((course) => {
-                  return (
-                    <div key={course} className="mb-4">
-                      <p className="font-semibold mb-1 capitalize">{course}</p>
-                      <div className="border border-b border-gray-200 mb-2"></div>
+                {Object.keys(data)
+                  .filter(
+                    (course) =>
+                      courseFilter === defaultCourse || course === courseFilter
+                  )
+                  .map((course) => {
+                    return (
+                      <div key={course} className="mb-4">
+                        <p className="font-semibold mb-1 capitalize">
+                          {course}
+                        </p>
+                        <div className="border border-b border-gray-200 mb-2"></div>
 
-                      <div className="flex flex-col">
-                        <label>
-                          <input
-                            type="checkbox"
-                            name={`${course}-select-all`}
-                            className="mb-2"
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setChosenList({
-                                  ...chosenList,
-                                  [course]: data[course],
-                                });
-                              } else {
-                                setChosenList({
-                                  ...chosenList,
-                                  [course]: [],
-                                });
-                              }
-                            }}
-                          />
-                          Select All
-                        </label>
+                        <div className="flex flex-col">
+                          <label>
+                            <input
+                              type="checkbox"
+                              name={`${course}-select-all`}
+                              className="mb-2"
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setChosenList({
+                                    ...chosenList,
+                                    [course]: data[course],
+                                  });
+                                } else {
+                                  setChosenList({
+                                    ...chosenList,
+                                    [course]: [],
+                                  });
+                                }
+                              }}
+                            />
+                            Select All
+                          </label>
 
-                        {data[course].map((item) => {
-                          return (
-                            <label key={item.name} className="capitalize">
-                              <input
-                                type="checkbox"
-                                name={`${course}-${item.name}`}
-                                className="mb-2"
-                                readOnly
-                                checked={chosenList[course].some(
-                                  (i) => i.name === item.name
-                                )}
-                                onChange={(e) => {
-                                  if (e.target.checked) {
-                                    const newList = {
-                                      ...chosenList,
-                                      [course]: [...chosenList[course], item],
-                                    };
-                                    setChosenList(newList);
-                                  } else {
-                                    const filteredItems = chosenList[
-                                      course
-                                    ].filter((i) => i.name !== item.name);
+                          {data[course].map((item) => {
+                            return (
+                              <label key={item.name} className="capitalize">
+                                <input
+                                  type="checkbox"
+                                  name={`${course}-${item.name}`}
+                                  className="mb-2"
+                                  readOnly
+                                  checked={chosenList[course].some(
+                                    (i) => i.name === item.name
+                                  )}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      const newList = {
+                                        ...chosenList,
+                                        [course]: [...chosenList[course], item],
+                                      };
+                                      setChosenList(newList);
+                                    } else {
+                                      const filteredItems = chosenList[
+                                        course
+                                      ].filter((i) => i.name !== item.name);
 
-                                    setChosenList({
-                                      ...chosenList,
-                                      [course]: filteredItems,
-                                    });
-                                  }
-                                }}
-                              />
-                              {item.name}
-                            </label>
-                          );
-                        })}
+                                      setChosenList({
+                                        ...chosenList,
+                                        [course]: filteredItems,
+                                      });
+                                    }
+                                  }}
+                                />
+                                {item.name}
+                              </label>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
 
               <div>
