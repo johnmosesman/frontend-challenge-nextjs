@@ -136,6 +136,10 @@ export default function Home() {
                               type="checkbox"
                               name={`${course}-select-all`}
                               className="mb-2"
+                              checked={
+                                data[course].length ===
+                                chosenList[course].length
+                              }
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setChosenList({

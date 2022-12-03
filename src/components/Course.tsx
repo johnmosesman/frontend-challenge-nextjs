@@ -1,4 +1,4 @@
-import { Item } from "../../pages/index-refactored";
+import { Item } from "../../pages/refactor";
 
 type Props = {
   course: string;
@@ -26,6 +26,7 @@ export function Course({
             type="checkbox"
             name={`${course}-select-all`}
             className="mb-2"
+            checked={items.length === chosenItems.length}
             onChange={(e) => selectAll(e.target.checked)}
           />
           Select All
