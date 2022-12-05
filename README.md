@@ -1,3 +1,11 @@
+# Frontend Challenge!
+
+This is my implementation of a frontend challenge comparing similar implementations across different frameworks: https://gist.github.com/johnmosesman/118b41308e7a60ecc8249a81cb6195db
+
+Based on this tweet: https://twitter.com/johnmosesman/status/1598688398679724033?cxt=HHwWgsC-3Zuo168sAAAA
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
